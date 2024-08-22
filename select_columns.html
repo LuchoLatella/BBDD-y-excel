@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Seleccionar Columnas</title>
+</head>
+<body>
+    <h1>Selecciona las Columnas para la Nueva Tabla</h1>
+    <form action="{{ url_for('select_columns') }}" method="POST">
+        {% for column in columns %}
+        <input type="checkbox" name="columns" value="{{ column }}">{{ column }}<br>
+        {% endfor %}
+        <button type="submit">Crear Nueva Tabla</button>
+    </form>
+</body>
+</html>
