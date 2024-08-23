@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog, messagebox
-from modules.db_manager import DatabaseManager
+from modules.database_manager import DatabaseManager
 from modules.table_manager import TableManager
 from modules.data_import import DataImport
 from modules.query_executor import QueryExecutor
