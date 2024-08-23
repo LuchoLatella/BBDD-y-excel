@@ -1,11 +1,12 @@
 import pandas as pd
-from tkinter import messagebox, filedialog
+from mysql.connector import Error
 
 class QueryExecutor:
     def __init__(self, conn):
         self.conn = conn
 
     def export_to_csv(self, table_name, file_path):
+        """ Exporta los datos de la tabla a un archivo CSV. """
         try:
             df = pd.read_sql_query(f"SELECT * FROM {table_name}", self.conn)
             df.to_csv(file_path, index=False)
@@ -14,6 +15,7 @@ class QueryExecutor:
             print(f"Failed to export data to CSV: {str(e)}")
 
     def export_to_excel(self, table_name, file_path):
+        """ Exporta los datos de la tabla a un archivo Excel. """
         try:
             df = pd.read_sql_query(f"SELECT * FROM {table_name}", self.conn)
             df.to_excel(file_path, index=False, engine='openpyxl')
@@ -21,20 +23,6 @@ class QueryExecutor:
         except Exception as e:
             print(f"Failed to export data to Excel: {str(e)}")
 
-class DatabaseApp:
-    def __init__(self, root):
-        self.root = root
-        self.root.title("Database Manager")
-        self.conn = None  # Conexión a la base de datos
-
-        # GUI Elements
-        self.create_widgets()
-
-    def create_widgets(self):
-        # Elementos de la interfaz gráfica...
-        # Botón para exportar datos
-        self.export_button = tk.Button(self.root, text="Export Data", command=self.export_data)
-        self.export_button.grid(row=3, column=0, columnspan=3)
 
     def export_data(self):
         if not self.conn:
