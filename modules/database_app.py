@@ -51,23 +51,15 @@ class DatabaseApp:
         self.conn = self.db_manager.connect()
 
     def open_existing_database(self):
-        """ Permite al usuario seleccionar y abrir una base de datos existente. """
-        self.db_manager = DatabaseManager()
-        databases = self.db_manager.list_databases()
-        if not databases:
-            messagebox.showwarning("Error", "No databases found or failed to connect to the server.")
-            return
-        
-        db_name = simpledialog.askstring("Select Database", "Enter the database name to connect:", initialvalue=databases[0])
-        if db_name and db_name in databases:
-            self.db_manager = DatabaseManager(db_name)
+        """ Permite al usuario seleccionar y abrir un archivo de base de datos existente. """
+        file_path = filedialog.askopenfilename(filetypes=[("Database Files", "*.db"), ("All Files", "*.*")])
+        if file_path:
+            self.db_manager = DatabaseManager(file_path)
             self.conn = self.db_manager.connect()
             if self.conn:
-                messagebox.showinfo("Success", f"Connected to database '{db_name}'.")
+                messagebox.showinfo("Success", f"Connected to database '{file_path}'.")
             else:
-                messagebox.showerror("Error", f"Failed to connect to database '{db_name}'.")
-        else:
-            messagebox.showwarning("Error", "Database not found.")
+                messagebox.showerror("Error", f"Failed to connect to database '{file_path}'.")
 
     def export_data(self):
         """ Exporta datos a CSV o Excel. """
